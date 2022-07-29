@@ -34,6 +34,9 @@ public class GameFrame extends JFrame {
     //防御塔
     Turret turret =new Turret(this);
 
+    //攻击按钮
+    JButton attackButton;
+
     //游戏元素列表——批量元素
     ArrayList<GameObject> objList = new ArrayList<GameObject>();
     ArrayList<GameObject> blueList = new ArrayList<GameObject>();
@@ -66,17 +69,17 @@ public class GameFrame extends JFrame {
         }
 
         //鼠标按钮事件——攻击按钮
-        JButton button = new JButton();
-        button.setSize(115,130);
-        button.setLocation(1180,445);
+        attackButton = new JButton();
+        attackButton.setSize(115,130);
+        attackButton.setLocation(1180,445);
         //按钮事件
-        button.addActionListener(new ActionListener() {
+        attackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 player.attack(redList);
             }
         });
-        this.add(button);//按钮添加到界面中
+        this.add(attackButton);//按钮添加到界面中
         player.addButton();
 
         //重绘元素
