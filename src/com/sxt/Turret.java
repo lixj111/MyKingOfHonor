@@ -30,10 +30,10 @@ public class Turret extends GameObject{
         turretList.add(turretBlue1 = new TurretBlue(gameFrame,2175,4275));
         turretList.add(turretBlue2 = new TurretBlue(gameFrame,3200,4275));
         turretList.add(turretBlue3 = new TurretBlue(gameFrame,4600,4300));
-        turretList.add(turretRedBase = new TurretRed(gameFrame,5525,3600));
-        turretList.add(turretRed1 = new TurretRed(gameFrame,5275,1410));
-        turretList.add(turretRed2 = new TurretRed(gameFrame,5550,1925));
-        turretList.add(turretRed3 = new TurretRed(gameFrame,5600,2525));
+        turretList.add(turretRedBase = new TurretRed(gameFrame,5275,1410));
+        turretList.add(turretRed1 = new TurretRed(gameFrame,5525,1925));
+        turretList.add(turretRed2 = new TurretRed(gameFrame,5550,2525));
+        turretList.add(turretRed3 = new TurretRed(gameFrame,5600,3600));
     }
 
     public Turret(GameFrame gameFrame, int x, int y){
@@ -43,6 +43,52 @@ public class Turret extends GameObject{
         setAttackCoolDownTime(1000);
         setDis(300);
         //setImg("");
+    }
+
+    public void addTurret(){
+        /*
+        * 防御塔保护机制：前面的防御塔被摧毁后才能攻击后续的防御塔
+        * 添加到objList例里的防御塔都会被绘制出来，但是双方攻击（redList、blueList）列表中只添加存活的防御塔的第一个
+        * */
+        //blueList
+        //最外围的塔被摧毁 && 二塔存活 && 二塔没加入blueList
+        if (!turretBlue3.isAlive() && turretBlue2.isAlive()
+                && gameFrame.blueList.indexOf(gameFrame.turret.turretBlue2) == -1){
+            gameFrame.blueList.add(gameFrame.turret.turretBlue2);
+        }
+        //二塔被摧毁 && 高地塔存活 && 高地塔没加入blueList
+        if (!turretBlue2.isAlive() && turretBlue1.isAlive()
+                && gameFrame.blueList.indexOf(gameFrame.turret.turretBlue1) == -1){
+            gameFrame.blueList.add(gameFrame.turret.turretBlue1);
+        }
+        //高地塔被摧毁 && 水晶存活 && 水晶没加入blueList
+        if (!turretBlue1.isAlive() && turretBlueBase.isAlive()
+                && gameFrame.blueList.indexOf(gameFrame.turret.turretBlueBase) == -1){
+            gameFrame.blueList.add(gameFrame.turret.turretBlueBase);
+        }
+        if (!turretBlueBase.isAlive()){
+            gameFrame.state=3;//游戏失败
+        }
+
+        //redList
+        //最外围的塔被摧毁 && 二塔存活 && 二塔没加入redList
+        if (!turretRed3.isAlive() && turretRed2.isAlive()
+                && gameFrame.redList.indexOf(gameFrame.turret.turretRed2) == -1){
+            gameFrame.redList.add(gameFrame.turret.turretRed2);
+        }
+        //二塔被摧毁 && 高地塔存活 && 高地塔没加入redList
+        if (!turretRed2.isAlive() && turretRed1.isAlive()
+                && gameFrame.redList.indexOf(gameFrame.turret.turretRed1) == -1){
+            gameFrame.redList.add(gameFrame.turret.turretRed1);
+        }
+        //高地塔被摧毁 && 水晶存活 && 水晶没加入redList
+        if (!turretRed1.isAlive() && turretRedBase.isAlive()
+                && gameFrame.redList.indexOf(gameFrame.turret.turretRedBase) == -1){
+            gameFrame.redList.add(gameFrame.turret.turretRedBase);
+        }
+        if (!turretRedBase.isAlive()){
+            gameFrame.state=2;//游戏胜利
+        }
     }
 
     @Override

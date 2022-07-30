@@ -132,7 +132,7 @@ public abstract class GameObject {
                 }*/
                 //玩家攻击
                 if(Champion.class.isAssignableFrom((getClass()))){
-                    bullet = new Bullet(gameFrame,this,getTarget(),250,50);
+                    bullet = new Bullet(gameFrame,this,getTarget(),1000,50);
                 }
                 gameFrame.objList.add(bullet);
                 //线程开始

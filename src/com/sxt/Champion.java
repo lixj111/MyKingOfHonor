@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public abstract class Champion extends GameObject{
 
@@ -18,6 +19,9 @@ public abstract class Champion extends GameObject{
     Image abilityTwo;
     Image abilityThree;
 
+    //英雄头像
+    Image classical;
+
     //技能冷却时间
     int coolDownTimeOne;
     int coolDownTimeTwo;
@@ -28,6 +32,8 @@ public abstract class Champion extends GameObject{
     boolean coolDownTwo = true;
     boolean coolDownThree = true;
 
+    //英雄列表
+    ArrayList<Champion> championList = new ArrayList<Champion>();
 
     //移动图片
     static String[] imgs = new String[4];
@@ -52,7 +58,17 @@ public abstract class Champion extends GameObject{
     }
 
     public Champion(GameFrame gameFrame, int x, int y) {
-        super(gameFrame, x, y);
+        super(gameFrame);
+        setImg("img/stand.png");
+        setX(x);
+        setY(y);
+        setSpd(25);
+        setHp(100000);
+        setCurrenHp(getHp());
+        setDis(500);
+        setAttackCoolDownTime(500);
+        championList.add(new ChampionDaJi(gameFrame));
+        championList.add(new ChampionHouYi(gameFrame));
     }
 
     public void KeyPressed(KeyEvent e){

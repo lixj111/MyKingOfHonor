@@ -37,6 +37,7 @@ public class ChampionDaJi extends Champion{
         abilityOne = Toolkit.getDefaultToolkit().getImage("img/DaJi/a1.png");
         abilityTwo = Toolkit.getDefaultToolkit().getImage("img/DaJi/a2.png");
         abilityThree = Toolkit.getDefaultToolkit().getImage("img/DaJi/a3.png");
+        classical = Toolkit.getDefaultToolkit().getImage("img/DaJi/classical.jpg");
         coolDownTimeOne=6000;
         coolDownTimeTwo=8000;
         coolDownTimeThree=10000;

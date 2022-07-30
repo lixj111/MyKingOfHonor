@@ -32,14 +32,23 @@ public class MinionBlue extends Minion{
             //原路线移动
             if (getX() >= 1685 && getX() < 4925) {
                 setSpd(12);
-                setX(getX() + getSpd());
+                //避免碰撞，要碰到时停一下
+                if (!hitMinion(getX()+getSpd(),getY(),gameFrame.blueList)) {
+                    setX(getX() + getSpd());
+                }
             } else if (getX() <= 5425) {
                 setSpd(10);
-                setX(getX() + getSpd());
-                setY(getY() - getSpd());
+                if (!hitMinion(getX()+getSpd(),getY(),gameFrame.blueList)) {
+                    setX(getX() + getSpd());
+                }
+                if (!hitMinion(getX(),getY()-getSpd(),gameFrame.blueList)) {
+                    setY(getY() - getSpd());
+                }
             } else{
                 setSpd(9);
-                setY(getY() - getSpd());
+                if (!hitMinion(getX(),getY()-getSpd(),gameFrame.blueList)) {
+                    setY(getY() - getSpd());
+                }
             }
         }
     }

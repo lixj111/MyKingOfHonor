@@ -35,14 +35,22 @@ public class MinionRed extends Minion{
             //原路线移动——可扩大点范围避免小兵回不到原路线
             if (getY() >= 1345 && getY() < 3775) {
                 setSpd(9);
-                setY(getY() + getSpd());
+                if (!hitMinion(getX(),getY()+getSpd(),gameFrame.blueList)) {
+                    setY(getY() + getSpd());
+                }
             } else if (getY() >= 3500 && getY() < 4275) {
                 setSpd(10);
-                setX(getX() - getSpd());
-                setY(getY() + getSpd());
+                if (!hitMinion(getX()-getSpd(),getY(),gameFrame.blueList)) {
+                    setX(getX() - getSpd());
+                }
+                if (!hitMinion(getX(),getY()+getSpd(),gameFrame.blueList)) {
+                    setY(getY() + getSpd());
+                }
             } else if (getY() >= 4200 && getX() > 1685) {
                 setSpd(12);
-                setX(getX() - getSpd());
+                if (!hitMinion(getX()-getSpd(),getY(),gameFrame.blueList)) {
+                    setX(getX() - getSpd());
+                }
             }
         }
     }

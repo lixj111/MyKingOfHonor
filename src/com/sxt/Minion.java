@@ -51,7 +51,8 @@ public abstract class Minion extends GameObject{
     }
 
     public void moveToTarget(){
-        int dis = (int) getDis(getX(),getY(), getTarget().getX(), getTarget().getY());
+        //避免除数为零，可以用try、catch，也可以把除数设为double类型，不要求除数不为零
+        /*int dis = (int) getDis(getX(),getY(), getTarget().getX(), getTarget().getY());
         try {
             if(dis<=0){
                 dis = 1;
@@ -62,6 +63,17 @@ public abstract class Minion extends GameObject{
             setY(getY()+ySpeed);
         }catch (Exception e){
             throw e;
+        }*/
+
+        double dis = getDis(getX(),getY(), getTarget().getX(), getTarget().getY());
+        int xSpeed = (int) (getSpd() * (getTarget().getX() - getX()) / dis);//x轴分速度速度=speed*cos（α）
+        int ySpeed = (int) (getSpd() * (getTarget().getY() - getY()) / dis);//y轴分速度=speed*sin（α）
+        //要碰到时就停一下
+        if (!hitMinion(getX()+xSpeed,getY(),gameFrame.objList)) {
+            setX(getX() + xSpeed);
+        }
+        if (!hitMinion(getX(),getY()+ySpeed,gameFrame.objList)) {
+            setY(getY() + ySpeed);
         }
     }
 
@@ -88,6 +100,27 @@ public abstract class Minion extends GameObject{
                 new NextLine().start();
             }
         }
+    }
+
+    /*
+    * 小兵碰撞，不让同类（同一方的小兵）的小兵碰在一块？？？要碰到时就停一下
+    * @param x: 下一步的横坐标
+    * @param y: 下一步的纵坐标
+    * @param objList: 小兵列表
+    * @return 下一步位置与其他小兵是否碰撞
+    * */
+    public boolean hitMinion(int x,int y,ArrayList<GameObject> objList){
+        //创建新的矩形区域作为预判后小兵下一步的位置
+        Rectangle r = new Rectangle(getX()-16,getY()-16,45,55);
+        for (GameObject obj:objList){
+            //是相同类 && 不是自身--->相同类：是MinionRed/MinionBlue
+            if (obj.getClass()==this.getClass() && obj != this){
+                if(r.intersects(obj.getRec())){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override

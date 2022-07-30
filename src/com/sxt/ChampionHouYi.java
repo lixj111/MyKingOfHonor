@@ -40,9 +40,14 @@ public class ChampionHouYi extends Champion{
         abilityOne = Toolkit.getDefaultToolkit().getImage("img/HouYi/a1.png");
         abilityTwo = Toolkit.getDefaultToolkit().getImage("img/HouYi/a2.png");
         abilityThree = Toolkit.getDefaultToolkit().getImage("img/HouYi/a3.png");
+        classical = Toolkit.getDefaultToolkit().getImage("img/HouYi/classical.jpg");
         coolDownTimeOne=6000;
         coolDownTimeTwo=8000;
         coolDownTimeThree=10000;
+    }
+
+    public ChampionHouYi(GameFrame gameFrame, int i, int j) {
+        super(gameFrame,i,j);
     }
 
     public void abilityThreeMove(){
