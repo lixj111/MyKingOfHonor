@@ -1,5 +1,7 @@
 package com.sxt;
 
+import com.sxt.beast.Beast;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -44,16 +46,19 @@ public class GameFrame extends JFrame {
     //防御塔
     Turret turret =new Turret(this);
 
+    //野怪
+    public Beast beast = new Beast(this);
+
     //攻击按钮
     JButton attackButton;
     //英雄按钮
     JButton championButton;
 
     //游戏元素列表——批量元素
-    ArrayList<GameObject> objList = new ArrayList<GameObject>();
-    ArrayList<GameObject> blueList = new ArrayList<GameObject>();
+    public ArrayList<GameObject> objList = new ArrayList<GameObject>();
+    public ArrayList<GameObject> blueList = new ArrayList<GameObject>();
     ArrayList<GameObject> redList = new ArrayList<GameObject>();
-    ArrayList<GameObject> removeList = new ArrayList<GameObject>();//要删除的元素的列表
+    public ArrayList<GameObject> removeList = new ArrayList<GameObject>();//要删除的元素的列表
     public void launch(){
         //设置尺寸
         setSize(windowWidth,windowHeight);
@@ -72,6 +77,7 @@ public class GameFrame extends JFrame {
         //添加游戏元素
         objList.add(background);
         objList.addAll(turret.turretList);
+        objList.addAll(beast.beastList);
         //objList.add(player);
         /*for (int i = 0; i<4; i++){
             blueList.add(turret.turretList.get(i));
@@ -121,7 +127,9 @@ public class GameFrame extends JFrame {
     public void paint(Graphics g){//Graphics是画笔工具
         //System.out.println(turret.turretList.get(7).getX());
         //System.out.println(turret.turretList.get(7).getY());
-        //System.out.println(player.getX()+" "+player.getY());
+        if(player!=null) {
+            System.out.println(player.getX()+" "+player.getY());
+        }
         if(offScreenImage == null){
             offScreenImage = this.createImage(6628,4900);//背景图片尺寸
         }

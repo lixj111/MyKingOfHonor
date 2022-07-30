@@ -1,5 +1,7 @@
 package com.sxt;
 
+import com.sxt.beast.Beast;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -13,7 +15,7 @@ public abstract class GameObject {
     Image img;
 
     //游戏界面
-    GameFrame gameFrame;
+    public GameFrame gameFrame;
 
     //速度
     private int spd;
@@ -158,6 +160,19 @@ public abstract class GameObject {
                     hasTarget=true;
                 }
             }
+            //判断野怪是否在范围，只有玩家可以攻击野怪
+            if(Champion.class.isAssignableFrom(getClass())){
+                for(GameObject obj:gameFrame.beast.beastList){
+                    //判断攻击范围（圆形）与敌方（矩形）是否相交
+                    if(revIntersectsRecCir(obj.getRec(),getX(),getY(),getDis())){
+                        //找到目标，变量赋值，跳出循环
+                        target=obj;
+                        hasTarget=true;
+                        break;
+                    }
+                }
+            }
+
         }
     }
 
@@ -232,6 +247,14 @@ public abstract class GameObject {
     }
 
     public void setCurrenHp(int currenHp) {
+        //是否受到伤害
+        if (currenHp<getCurrenHp()){
+            //是野怪类
+            if (Beast.class.isAssignableFrom(getClass())){
+                setTarget(gameFrame.player);
+                setHasTarget(true);
+            }
+        }
         this.currenHp = currenHp;
     }
 
